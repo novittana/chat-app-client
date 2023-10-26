@@ -1,0 +1,23 @@
+
+.message-item{
+    display: flex;
+    padding: 10px;
+    margin-bottom: 15px;
+    justify-content: flex-start;
+    /*align-items: flex-end;*/
+}
+.message_container {
+display: flex;
+}
+
+.avatar{
+    display: block;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.own{
+    justify-content: flex-end;
+}

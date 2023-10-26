@@ -1,0 +1,7 @@
+.current_chat_user_info_wrapper {
+display: flex;
+    justify-content: space-between;
+}
+.current_chat_user_info_btn{
+    height: 100%;
+}

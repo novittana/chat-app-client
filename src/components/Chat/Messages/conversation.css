@@ -1,0 +1,27 @@
+.chat_list_info_wrapper{
+
+}
+
+.chat_list_item{
+    display: flex;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.chat_list_item:hover{
+    background-color: ghostwhite;
+}
+
+.chat_list_item_wrapper{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.chat_list_avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}

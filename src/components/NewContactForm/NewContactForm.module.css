@@ -1,0 +1,14 @@
+.contactForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.contactInput{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: #40a7e3;
+    border-bottom-width: 2px;
+}

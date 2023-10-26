@@ -1,0 +1,12 @@
+.messages_field_wrapper {
+    display: grid;
+    grid-template-rows: 3% 92% 5%;
+}
+
+.messages_field_title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+}
