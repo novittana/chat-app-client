@@ -15,12 +15,15 @@ function MessageContainer({message}) {
 }, []);
 
     // console.log(message)
-    return <li key={message._id} ref={scrollRef} className={message.sender===user._id ? "message-item own" : "message-item"}>
-        <div className="message_container">
-            <img className="avatar" src={avatar} alt="Avatar username"/>
-            <Message props={message} />
-        </div>
-    </li>
+    return <>
+        <li key={message._id} ref={scrollRef} className={message.sender===user._id ? "message-item own" : "message-item"}>
+            <div className="message_container">
+                <img className="avatar" src={avatar} alt="Avatar username"/>
+                <Message props={message} />
+            </div>
+        </li>
+    </>
+
 }
 
 export default MessageContainer;

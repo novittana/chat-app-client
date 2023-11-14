@@ -14,9 +14,7 @@ function SearchField({name}) {
     // const [searchParams, setSearchParams] = useSearchParams(null);
     // const username = searchParams.get("username");
     return <>
-        <form className="search_form">
-            <input placeholder='Search' name={name} onChange={onSearchFieldChange}/>
-        </form>
+
     </>
 }
 

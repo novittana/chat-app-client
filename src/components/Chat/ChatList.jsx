@@ -5,10 +5,12 @@ import {conversationsRoute} from "../../utils/APIRoutes";
 import {useEffect} from "react";
 import Conversation from "./Messages/Conversation";
 import {useDispatch, useSelector} from "react-redux";
+import {addFilter} from "../../redux/filterSlice";
 import {setConversations, setCurrentConversationList} from "../../redux/conversation/conversationSlice";
 
 function ChatList() {
     const user = useSelector(state => state.userData.user);
+    const currentConversationUser = useSelector(state => state.conversationData.currentConversationUser);
     const conversations = useSelector(state => state.conversationData.conversations);
     const filteredConversations = useSelector(state => state.conversationData.currentConversationList);
     const dispatch = useDispatch();
@@ -23,21 +25,30 @@ function ChatList() {
         }
     }
 
+    const onInputChange = () => {
+        const privateConversations = conversations.filter(conv => {
+            console.log(conv.members)
+        });
+    }
+
     const onEditFolderBtnClick = () => {
         console.log("onEditFolderBtnClick")
     }
 
     useEffect(() => {
         getAllConversations();
-    }, [user])
+    }, [user, currentConversationUser])
 
     useEffect(() => {
         dispatch(setCurrentConversationList(conversations));
-    }, [conversations])
+    }, [conversations, currentConversationUser])
+
 
     return (
         <div>
-            <SearchField/>
+            <form className="search_form">
+                <input placeholder='Search' type="text" name="filter" onChange={onInputChange}/>
+            </form>
             <ul className="chat_list">
                 {filteredConversations.length !== 0 ?
                     filteredConversations.map((c) => (

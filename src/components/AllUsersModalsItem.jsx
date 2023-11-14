@@ -2,67 +2,64 @@ import axios from "axios";
 import {conversationsRoute} from "../utils/APIRoutes";
 import {setIsAllUsersModalListOpen} from "../redux/modalsSlice";
 import {useSelector, useDispatch} from "react-redux";
-import {setConversations, setCurrentReceiverId} from "../redux/conversation/conversationSlice";
-import {useEffect, useState} from "react";
 import {
     setCurrentConversation,
     setCurrentConversationOpen,
     setCurrentConversationUser
 } from "../redux/conversation/conversationSlice"
+import {setMessages} from "../redux/messageSlice";
 
-export default function AllUsersModalsItem ({receiver, userId}) {
-const [membersId, setMembersId] = useState([]);
+export default function AllUsersModalsItem({receiver}) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.userData.user);
-    const conversations = useSelector(state => state.conversationData.conversations);
+    const conversationsList = useSelector(state => state.conversationData.conversations);
 
-
-
-
-
-    const getAllConversations = async () => {
+    const addConversation = async (user, receiver) => {
         try {
-            const response = await axios.get(`${conversationsRoute}/${user._id}`);
-            const conversations = response.data;
-            dispatch(setConversations(conversations));
-        } catch (err) {
-            console.error(err)
+
+            const response = await axios.post(conversationsRoute,
+                {
+                    senderId: user._id,
+                    receiverId: receiver._id,
+                    filter: "private"
+                });
+            dispatch(setCurrentConversation(response.data))
+            console.log("Створено нову розмову:", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Помилка при створенні розмови", error);
         }
     }
 
-    const addConversation = async (user, receiver) => {
-        await axios.post(`${conversationsRoute}`, {members:
-           [{
-               senderId: user._id},
-        {receiverId: receiver._id
-           }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ,   filter:"private"})
-    }
-    // const isConvIncludeMember = membersId
-
     const onUserClick = (event) => {
+        const results = conversationsList.map(c => {
+            const conv = c;
+            const memb = c.members.find(member => member !== user._id);
+            if (memb === receiver._id) {
+                return conv
+            }
+        });
+        const selectedConv = results.filter(item => item !== undefined);
+        if (selectedConv.length === 0) {
+            addConversation(user, receiver);
+            dispatch(setCurrentConversationUser(receiver));
+            dispatch(setMessages([]));
+            dispatch(setIsAllUsersModalListOpen(false));
+            dispatch(setCurrentConversationOpen(true));
 
-    const result = conversations.map(c => {
-        const rec = c.members.find(member => console.log(member.id));
-        // dispatch(setCurrentConversation(c.id));
-        console.log(receiver.id)
-        console.log(rec)
-        return rec;
-    });
 
-        console.log(result)
-           dispatch(setIsAllUsersModalListOpen(false));
-           dispatch(setCurrentReceiverId(receiver._id))
-           addConversation(user, receiver);
-        getAllConversations();
+        } else {
+            dispatch(setIsAllUsersModalListOpen(false));
+            dispatch(setCurrentConversation(selectedConv[0]));
+            dispatch(setCurrentConversationOpen(true));
+            dispatch(setCurrentConversationUser(receiver));
+        }
     }
-
-
 
     return <>
         {
             receiver &&
-            <li key={receiver._id}{...receiver} onClick={onUserClick} >
+            <li key={receiver._id}{...receiver} onClick={onUserClick}>
                 <div>
                     <div>{receiver.avatarImage}</div>
                     {receiver.username && <div>{receiver.username}</div>}

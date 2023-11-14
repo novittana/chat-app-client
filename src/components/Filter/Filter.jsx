@@ -45,9 +45,6 @@ function Filter({onMenuBtnClick}) {
                 <li>
                     <button className="menu-btn" onClick={onWorkBTnClick}>Work</button>
                 </li>
-                <li>
-                    <button className="menu-btn">Create new</button>
-                </li>
             </ul>
         </FilterContainer>
 

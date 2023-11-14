@@ -4,12 +4,7 @@ import {useEffect, useState} from "react";
 import {messageRoute, userRoute} from "../../../utils/APIRoutes";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {setMessages} from "../../../redux/messageSlice";
 import TimeAgo from 'react-timeago';
-
-
-
-
 import {
     setCurrentConversation,
     setCurrentConversationOpen,

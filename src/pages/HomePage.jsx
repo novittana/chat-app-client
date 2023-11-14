@@ -1,6 +1,5 @@
 import Filter from "../components/Filter/Filter";
 import styled from "styled-components";
-// import Chat from "../pages/Chat";
 import Chat from "../components/Chat/Chat"
 import ChatList from "../components/Chat/ChatList";
 import BurgerMenu from "../components/BurgerMenu";

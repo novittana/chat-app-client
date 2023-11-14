@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 
 function CurrentChatUserInfo () {
     const currentConversationUser = useSelector(state => state.conversationData.currentConversationUser);
-    // console.log("currentConversationUser", currentConversationUser)
 
     return <div className="current_chat_user_info_wrapper">
         <div className="current_chat_user_info">

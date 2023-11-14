@@ -51,7 +51,7 @@ export default function AllUsersListModal() {
                 <SearchField/>
                 <ul>
                     {usersList.map((u)=> (
-                        <AllUsersModalsItem key={u._id} userId={u.id} receiver={u}/>)
+                        <AllUsersModalsItem key={u._id} receiver={u}/>)
                     )
                 }
                 </ul>

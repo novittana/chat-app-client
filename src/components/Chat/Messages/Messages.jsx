@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import MessageContainer from "./MessageContainer";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,32 +8,35 @@ import "./messages.css"
 
 function Messages() {
     const user = useSelector(state => state.userData.user);
-    const messages = useSelector(state => state.messagesData.messages);
     const currentConversation = useSelector(state => state.conversationData.currentConversation);
-
-
+    const messages = useSelector(state => state.messagesData.messages);
+    const currentConversationUser = useSelector(state => state.conversationData.currentConversationUser);
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        const getAllMessages = async () => {
-            try {
-                const response = await axios.get(`${messageRoute}/${currentConversation._id}`);
-                const messages = response.data;
+    const getAllMessages = async () => {
+        console.log({currentConversation})
+        try {
+            const response = await axios.get(`${messageRoute}/${currentConversation._id}`);
+            const messages = response.data;
                 dispatch(setMessages(messages));
-            } catch (err) {
-                console.error(err)
-            }
+        } catch (err) {
+            console.error(err)
         }
+    }
+    useEffect(() => {
+
         getAllMessages();
 
-    }, [user, currentConversation, dispatch, messages])
+    }, [user, currentConversation, dispatch, currentConversationUser, messages])
 
+    console.log("messages", messages)
     return <div className="message_list_container">
         <ul className="message_list">
-            {messages && messages.map((message) => (
+            {messages.length !== 0 ? messages.map((message) => (
 
                 <MessageContainer message={message} />)
-            )
+            ) :
+                ""
             }
         </ul>
     </div>
