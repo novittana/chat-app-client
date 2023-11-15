@@ -63,3 +63,11 @@ img {
   margin: 0 auto;
 
 }
+
+.light {
+  background-color: #fafafa;
+}
+
+.dark {
+  background-color: cornflowerblue;
+}

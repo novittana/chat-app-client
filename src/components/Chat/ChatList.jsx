@@ -2,7 +2,7 @@ import "./chat-list.css"
 import SearchField from "../SearchField/SearchField";
 import axios from "axios";
 import {conversationsRoute} from "../../utils/APIRoutes";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Conversation from "./Messages/Conversation";
 import {useDispatch, useSelector} from "react-redux";
 import {addFilter} from "../../redux/filterSlice";
@@ -10,9 +10,13 @@ import {setConversations, setCurrentConversationList} from "../../redux/conversa
 
 function ChatList() {
     const user = useSelector(state => state.userData.user);
+    const [filteredQueryConversations, setFilteredQueryConversations] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
+
     const currentConversationUser = useSelector(state => state.conversationData.currentConversationUser);
     const conversations = useSelector(state => state.conversationData.conversations);
     const filteredConversations = useSelector(state => state.conversationData.currentConversationList);
+    const allUsersList = useSelector(state => state.userData.allUsersList)
     const dispatch = useDispatch();
 
     const getAllConversations = async () => {
@@ -25,11 +29,41 @@ function ChatList() {
         }
     }
 
-    const onInputChange = () => {
-        const privateConversations = conversations.filter(conv => {
-            console.log(conv.members)
-        });
+    const onInputChange = (event) => {
+        // let query = event.currentTarget.value.toLowerCase();
+        // const privateConversations = conversations.map(conv => {
+        //         const member = conv.members.find(member =>
+        //             member !== user._id);
+        //         for (let user of allUsersList) {
+        //             if(user._id === member){
+        //                 setFilteredUsers(prevState => [...prevState, user]);
+        //                 setFilteredQueryConversations(prevState => [...prevState, conv])
+        //             }
+        //         }
+        //
+        //
+        //         // for (let user of allUsersList) {
+        //         //     if (user.username.includes(query) && query !== "") {
+        //         //         console.log(user._id)
+        //         //     }
+        //         // }
+        //         // allUsersList.filter(us => {
+        //         //
+        //         //     console.log(query)
+        //         //     if (us.username.includes(query) && conv.members !== us._id){
+        //         //         console.log(us)
+        //         //     };
+        //         //
+        //         // }
+        //     }
+        //
+        //
+        // )
+        // console.log(filteredUsers)
+        // console.log("privateConversations",privateConversations )
     }
+    console.log(filteredQueryConversations)
+    console.log(filteredUsers)
 
     const onEditFolderBtnClick = () => {
         console.log("onEditFolderBtnClick")

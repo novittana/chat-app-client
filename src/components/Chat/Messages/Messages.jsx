@@ -14,7 +14,6 @@ function Messages() {
 
     const dispatch = useDispatch();
     const getAllMessages = async () => {
-        console.log({currentConversation})
         try {
             const response = await axios.get(`${messageRoute}/${currentConversation._id}`);
             const messages = response.data;
@@ -29,7 +28,6 @@ function Messages() {
 
     }, [user, currentConversation, dispatch, currentConversationUser, messages])
 
-    console.log("messages", messages)
     return <div className="message_list_container">
         <ul className="message_list">
             {messages.length !== 0 ? messages.map((message) => (

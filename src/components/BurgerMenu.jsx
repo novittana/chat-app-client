@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import DarkModeToggle from "./DarkModeToggle"
+import ReactSwitch from "react-switch";
+import {setTheme} from "../redux/themaSlice"
+import {useDispatch, useSelector} from "react-redux";
 
 
 function BurgerMenu({active, setActive, user, onContactsBtnClick, onAllUsersBtnClick, onNewGroupBtnClick}){
+    const dispatch = useDispatch();
+    const theme = useSelector(state => state.themeData.value);
+    const toggleTheme = () => {
+        dispatch(setTheme(theme === "light" ? "dark" : "light"));
+    }
+
 
     return <MenuContainer >
         <div className={active ? "menu active" : "menu"}>
@@ -17,7 +25,7 @@ function BurgerMenu({active, setActive, user, onContactsBtnClick, onAllUsersBtnC
                     <li><button onClick={onContactsBtnClick}>Contacts</button></li>
                     <li><button onClick={onAllUsersBtnClick}>All users</button></li>
                     <li><button className="dark_thema_toggle-btn">
-                        <DarkModeToggle/>>
+                        <ReactSwitch onChange={toggleTheme} checked={theme === "dark"}/>
                     </button></li>
                 </ul>
                 <div className="blur" onClick={()=>{setActive(false)}}></div>

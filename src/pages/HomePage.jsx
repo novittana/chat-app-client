@@ -1,7 +1,6 @@
 import Filter from "../components/Filter/Filter";
 import styled from "styled-components";
 import Chat from "../components/Chat/Chat"
-import ChatList from "../components/Chat/ChatList";
 import BurgerMenu from "../components/BurgerMenu";
 import {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
@@ -19,6 +18,8 @@ export default function HomePage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const isNewGroupModalOpen = useSelector(state => state.modalsData.isNewGroupModalOpen);
+    const theme = useSelector(state => state.themeData.value);
+    console.log(theme)
     const dispatch = useDispatch();
 
     const onMenuBtnClick = () => {
@@ -54,7 +55,7 @@ export default function HomePage() {
     }, []);
 
     return <>
-        <HomePageContainer>
+        <HomePageContainer className={theme}>
             <Filter onMenuBtnClick={onMenuBtnClick}/>
             <BurgerMenu active={menuActive} setActive={setMenuActive} onContactsBtnClick={onContactsBtnClick} onNewGroupBtnClick={onNewGroupBtnClick} onAllUsersBtnClick={onAllUsersBtn} />
             <Chat/>
@@ -71,4 +72,9 @@ const HomePageContainer = styled.div`
   height: 100vh;
   display: grid;
   grid-template-columns: 10% 90%;
+  
+  .dark .chat_container {
+    background-color: #1f2023;
+    color: #fafafa;
+  }
 `;

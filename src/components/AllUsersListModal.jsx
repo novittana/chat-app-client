@@ -8,11 +8,12 @@ import {allUsersRoute} from "../utils/APIRoutes"
 import {useDispatch, useSelector} from "react-redux";
 import {setIsAllUsersModalListOpen} from "../redux/modalsSlice";
 import AllUsersModalsItem from "./AllUsersModalsItem";
+import {setAllUsersList} from "../redux/user/userSlice";
 
 export default function AllUsersListModal() {
-    const [usersList, setUsersList] = useState([]);
     const isAllUsersModalListOpen = useSelector(state => state.modalsData.isAllUsersModalListOpen);
     const user = useSelector(state => state.userData.user);
+    const usersList = useSelector(state => state.userData.allUsersList)
     const {_id} = user // Призначаємо пустий об'єкт за замовчуванням, якщо curUser є undefined
     const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ export default function AllUsersListModal() {
             try {
                 const response = await axios.get(`${allUsersRoute}/${_id}`);
                 const users = response.data;
-                setUsersList(users);
+               dispatch( setAllUsersList(users));
 
             } catch (error) {
                 console.error(error)

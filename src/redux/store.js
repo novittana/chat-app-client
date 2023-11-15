@@ -3,6 +3,8 @@ import {userReducer} from "./user/userSlice";
 import {conversationReducer} from "./conversation/conversationSlice";
 import {messagesReducer} from "./messageSlice";
 import {modalsReducer} from "./modalsSlice"
+import {filterReducer} from "./filterSlice";
+import {themeReducer} from "./themaSlice";
 
 // import {
 //     persistStore,
@@ -21,5 +23,7 @@ export const store = configureStore({
         conversationData: conversationReducer,
         messagesData: messagesReducer,
         modalsData: modalsReducer,
+        filterData: filterReducer,
+        themeData:themeReducer,
     }
 })
