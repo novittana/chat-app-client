@@ -7,6 +7,7 @@ import Conversation from "./Messages/Conversation";
 import {useDispatch, useSelector} from "react-redux";
 import {addFilter} from "../../redux/filterSlice";
 import {setConversations, setCurrentConversationList} from "../../redux/conversation/conversationSlice";
+import Groups from "./Groups/Groups";
 
 function ChatList() {
     const user = useSelector(state => state.userData.user);
@@ -83,6 +84,7 @@ function ChatList() {
             <form className="search_form">
                 <input placeholder='Search' type="text" name="filter" onChange={onInputChange}/>
             </form>
+            <Groups/>
             <ul className="chat_list">
                 {filteredConversations.length !== 0 ?
                     filteredConversations.map((c) => (

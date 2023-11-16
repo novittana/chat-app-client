@@ -10,4 +10,5 @@ export const messageRoute = `${host}/api/messages`;
 
 export const addContactRoute =`${host}/api/contacts/addcontact`;
 export const getAllContactsRoute = `${host}/api/contacts/getallcontact`;
-export const addGroupsRoute = `${host}/api/groups/addgroup`;
+export const addGroupsRoute = `${host}/api/groups`;
+export const getGroupsRoute = `${host}/api/groups`;

@@ -16,9 +16,9 @@ function AddGroupMembers() {
     const isAddMembersModalOpen = useSelector(state => state.modalsData.isAddMembersModalOpen);
     const groupName = useSelector(state => state.modalsData.groupName);
     const dispatch = useDispatch();
-
+    const user = useSelector(state => state.userData.user);
     const [usersList, setUsersList] = useState([]);
-    const [groupsMember, setGroupsMember] = useState([]);
+    const [groupsMember, setGroupsMember] = useState([user._id]);
 
     const [values, setValues] = useState({
         _id:"",
@@ -26,7 +26,7 @@ function AddGroupMembers() {
         email:"",
     })
 
-    const user = useSelector(state => state.userData.user);
+
     const {_id} = user // Призначаємо пустий об'єкт за замовчуванням, якщо curUser є undefined
     useEffect(() => {
 
@@ -63,9 +63,9 @@ function AddGroupMembers() {
         const {_id, username,  email} = values;
         const {data} = await axios.post(addGroupsRoute, {
             _id,
-            username,
-            email,
             name: groupName,
+            members: groupsMember,
+            admin: user._id,
             filter:"work"
         });
         console.log("Create a group")
@@ -81,7 +81,7 @@ function AddGroupMembers() {
             <ul>
                 {usersList.map((u) => (
                     <li key={u._id}{...u} onClick={() => {
-                        setGroupsMember([...groupsMember, u])
+                        setGroupsMember([...groupsMember, u._id])
                     }}>
                         <div>
                             <div>{u.avatarImage}</div>
