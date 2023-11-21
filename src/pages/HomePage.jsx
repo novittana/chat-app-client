@@ -19,7 +19,7 @@ export default function HomePage() {
 
     const isNewGroupModalOpen = useSelector(state => state.modalsData.isNewGroupModalOpen);
     const theme = useSelector(state => state.themeData.value);
-    console.log(theme)
+    // console.log(theme)
     const dispatch = useDispatch();
 
     const onMenuBtnClick = () => {

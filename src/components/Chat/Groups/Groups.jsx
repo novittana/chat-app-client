@@ -7,7 +7,7 @@ import TimeAgo from "react-timeago";
 import Conversation from "../Messages/Conversation";
 
 function Groups() {
-    console.log("groups")
+    // console.log("groups")
     const [groups, setGroups] = useState([]);
     const user = useSelector(state => state.userData.user);
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function Groups() {
         getAllGroups();
     }, [user])
 
-    console.log(groups);
+    // console.log(groups);
 
 
     return <>

@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addFilter} from "../../redux/filterSlice";
 import {setConversations, setCurrentConversationList} from "../../redux/conversation/conversationSlice";
 import Groups from "./Groups/Groups";
+import logout from "../Logout";
 
 function ChatList() {
     const user = useSelector(state => state.userData.user);
@@ -31,7 +32,29 @@ function ChatList() {
     }
 
     const onInputChange = (event) => {
-        // let query = event.currentTarget.value.toLowerCase();
+        let query = event.currentTarget.value.toLowerCase();
+        console.log(query)
+        conversations.map(c => {
+            const conversationId = c._id;
+            const conversationMember = c.members.find(member => {
+              if (member !== user._id)
+                  setFilteredUsers(prevState => [...prevState, member]);
+                // console.log(member);
+            });
+
+            // console.log(allUsersList.find(user => user._id === conversationMember))
+            // console.log(conversationMember)
+            // console.log(conversationId);
+        })
+        console.log("filteredUsers",filteredUsers);
+        if(filteredUsers){
+            filteredUsers.filter(usId => {
+                allUsersList.filter(us => {
+                    if(us.username.includes(query))
+                    console.log(us.username)
+                })
+            })
+        }
         // const privateConversations = conversations.map(conv => {
         //         const member = conv.members.find(member =>
         //             member !== user._id);
@@ -63,9 +86,8 @@ function ChatList() {
         // console.log(filteredUsers)
         // console.log("privateConversations",privateConversations )
     }
-    console.log(filteredQueryConversations)
-    console.log(filteredUsers)
 
+    // console.log("filteredUsers",filteredUsers)
     const onEditFolderBtnClick = () => {
         console.log("onEditFolderBtnClick")
     }
