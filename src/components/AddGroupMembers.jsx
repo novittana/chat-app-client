@@ -1,17 +1,15 @@
 import ModalTitle from "./ModalTitle/ModalTitle";
 import ModalWindow from "./ModalWindow/ModalWindow";
 import SearchField from "./SearchField/SearchField";
-import ContactList from "./ContactList/ContactList";
-import Button from "./Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {setIsNewGroupModalOpen, setIsAddMembersModalOpen} from "../redux/modalsSlice"
 import fa from "react-timeago/lib/language-strings/fa";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {addGroupsRoute, allUsersRoute} from "../utils/APIRoutes";
-import AllUsersModalsItem from "./AllUsersModalsItem";
 import "./addGroupMembers.css"
 import avatar from "../assets/avatar.jpg";
+
 
 function AddGroupMembers() {
     const isNewGroupModalOpen = useSelector(state => state.modalsData.isNewGroupModalOpen);
@@ -23,6 +21,8 @@ function AddGroupMembers() {
     const [groupsMember, setGroupsMember] = useState([user._id]);
     const [groupsMemberNames, setGroupsMemberNames] = useState([]);
     const [selected, setSelected] = useState("");
+    const [deleteMemberName, setDeleteMemberName] = useState(undefined);
+    const [deleteMemberId, setDeleteMemberId] = useState(undefined);
 
     const [values, setValues] = useState({
         _id: "",
@@ -61,10 +61,6 @@ function AddGroupMembers() {
         dispatch(setIsAddMembersModalOpen(false));
     }
 
-    const onDeleteMembBtnClick = () => {
-
-    }
-
     const onCreateBtn = async () => {
         const {_id, username, email} = values;
         const {data} = await axios.post(addGroupsRoute, {
@@ -74,15 +70,25 @@ function AddGroupMembers() {
             admin: user._id,
             filter: "work"
         });
-        console.log("Create a group")
-        console.log(groupName);
-        console.log("groupsMember", groupsMember);
         dispatch(setIsAddMembersModalOpen(false));
     }
 
     const onUserClick = (event) => {
 
     }
+
+    const deleteGroupMemberName = () => {
+        setGroupsMemberNames(groupsMemberNames.filter(grMembName => grMembName !== deleteMemberName))
+    };
+    const deleteGroupMemberId = () => {
+        setGroupsMember(groupsMember.filter(grMembId => grMembId !== deleteMemberId))
+    }
+
+
+    useEffect(()=>{
+deleteGroupMemberName();
+deleteGroupMemberId()
+    },[deleteMemberName, deleteMemberId])
 
     return <>
         {isAddMembersModalOpen && <ModalWindow>
@@ -93,7 +99,10 @@ function AddGroupMembers() {
                     <li key={m._id} {...{m}} onClick={onUserClick}>
                         <div>
                             <span>{m}</span>
-                            <button className="delete_memb_btn" onClick={onDeleteMembBtnClick}>x</button>
+                            <button className="delete_memb_btn" onClick={()=> {
+                                setDeleteMemberName(groupsMemberNames.splice(groupsMemberNames.indexOf(m), 1));
+                                setDeleteMemberId(groupsMember.splice(groupsMember.indexOf(m)))
+                            }}>x</button>
                             ,
                         </div>
                     </li>
@@ -108,8 +117,6 @@ function AddGroupMembers() {
                             setGroupsMember([...groupsMember, u._id]);
                             setGroupsMemberNames(prevState => [...prevState, u.username]);
                         }
-
-
                     }}>
                         <div className="member_card">
                             <div>{u.avatarImage}

@@ -13,6 +13,7 @@ function ModalAddGroupName() {
 
     const onCancelBtn = () => {
         dispatch(setIsNewGroupModalOpen(false));
+        dispatch(setGroupName(""));
     }
     const onNextBtn = () => {
         if (groupName.length !== 0) {
@@ -25,7 +26,7 @@ function ModalAddGroupName() {
             <div className={css.groupImage}></div>
             <form className={css.groupNameForm} onChange={onInputChange}>
                 <label>Group name</label>
-                <input className={css.groupNameInput} />
+                <input className={css.groupNameInput} value={groupName}/>
                 <button onClick={onNextBtn} type="submit">Next</button>
             </form>
             <div className={css.buttonWrapper}>
